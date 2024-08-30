@@ -1,0 +1,29 @@
+{
+	"id": "ihse-draco-multiviewer",
+	"name": "ihse-draco-multiviewer",
+    "version": "1.0.0",
+    "keywords": [
+        "KVM",
+        "Multiviewer"
+    ],
+    "manufacturer": "IHSE",
+    "shortname": "ihse-draco-multiviewer",
+    "description": "",
+    "license": "MIT",
+	"bugs": "https://github.com/movin-xs/wicket-select2/wiki",
+	"maintainers": [
+		{
+			"name": "Harald Winkelmann",
+			"email": "harald.winkelmann@ihse.de"
+		}
+	],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../index.js"
+	},
+	"legacyIds": [],
+	"products": ["Multiviewer KVM"],
+	"repository": "https://github.com/movin-xs/wicket-select2.git"
+}
