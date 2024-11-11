@@ -17,6 +17,7 @@ module.exports.initActions = function () {
 						,{ id: '20', label: 'PiP (Picture in Picture)' }
 						,{ id: '30', label: 'Quad (2x2)' }
 						,{ id: '60', label: 'Preview' }
+						,{ id: '70', label: 'True PiP' }
 						,{ id: '80', label: 'PbP (Picture by Picture)' }
 						,{ id: '90', label: 'Free Layout 1' }
 						,{ id: '91', label: 'Free Layout 2' }
