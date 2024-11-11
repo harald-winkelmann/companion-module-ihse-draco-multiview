@@ -23,6 +23,7 @@ module.exports.initActions = function () {
 						,{ id: '91', label: 'Free Layout 2' }
 						,{ id: '92', label: 'Free Layout 3' }
 						,{ id: '93', label: 'Free Layout 4' }
+						,{ id: 'FF', label: 'Keep current layout' }
 				],
 				tooltip: 'Select display mode'
 			}],
@@ -97,15 +98,14 @@ module.exports.executeAction = function (action) {
             // Command for setting display mode.
             var cmd = Buffer.from([0x1B, 0x5B, 0x46, 0x07, 0x00, 0x00, 0x00])
 
-            // Split option to digits.
-            var stringDigits = opt.mode.split('')
-            var realDigits   = stringDigits.map(Number)
+            // Split option to one character hex strings.
+            var hexStrings = opt.mode.split('')
 
             // Write options to command.
-            if(realDigits.length > 0)
-                cmd.writeUInt8(realDigits[0], 5)
-            if(realDigits.length > 1)
-                cmd.writeUInt8(realDigits[1], 6)
+            if(hexStrings.length > 0)
+                cmd.writeUInt8(Number("0x" + hexStrings[0]), 5)
+            if(hexStrings.length > 1)
+                cmd.writeUInt8(Number("0x" + hexStrings[1]), 6)
             self.log('debug', 'CMD setdisplaymode:  ' + cmd.toString('hex'))
 
         break;
