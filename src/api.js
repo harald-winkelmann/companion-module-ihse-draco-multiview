@@ -59,9 +59,50 @@ module.exports.initAPI = function () {
 		});
 
 		self.socket.on('data', function (data) {
-			if(data[2] == 0x7a) return;
-			console.log('LAN ECHO');
-			console.log(data);
+			var cnt = 1;
+			var console_length = 50;
+			while(data.length) {
+
+				// Keep alive echo.
+				if(data[2] == 0x7a) {
+					var telegram_length = data.readInt16LE(3);
+					data = data.slice(telegram_length);
+					continue;
+				}
+				// Command successful executed.
+				if(data[0] == 0x06) {
+					console.log(new Date().toISOString(), 'OK'.padEnd(self.console_ident), data); 
+					data = data.slice(1);
+					continue;
+				}
+				// Command error.
+				if(data[0] == 0x15) {
+					console.log(new Date().toISOString(), 'ERROR'.padEnd(self.console_ident), data); 
+					data = data.slice(1);
+					continue;
+				}
+				// Matrix busy. Command not executed.
+				if(data[0] == 0x07) {
+					console.log(new Date().toISOString(), 'BUSY'.padEnd(self.console_ident), data); 
+					data = data.slice(1);
+					continue;
+				}
+				// Matrix telegram echo.
+				if(data[0] == 0x1B) {
+					if(cnt == 1) {
+						console.log(new Date().toISOString(), 'ECHO'.padEnd(self.console_ident), data);
+					}
+					var telegram_length = data.readInt16LE(3);
+					var cmd = data.slice(0, telegram_length);
+					var additional = '';
+					if(telegram_length > console_length) { additional = '... more';}
+					console.log('ECHO ' + cnt + ' ', cmd.slice(0, console_length), additional);
+					data = data.slice(telegram_length);
+					//console.log(data);
+					cnt++;
+					continue;
+				}
+			}
 		});
 	}
 

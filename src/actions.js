@@ -136,7 +136,7 @@ module.exports.executeAction = function (action) {
 
     if (cmd !== undefined) {
         if (self.socket !== undefined) {
-            self.log('debug', 'sending ' + cmd.toString('hex'))
+			console.log(new Date().toISOString(), 'CMD'.padEnd(self.console_ident), cmd)
             self.socket.send(cmd)
         }
     }
